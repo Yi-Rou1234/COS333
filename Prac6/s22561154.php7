@@ -1,0 +1,40 @@
+<?php
+if ($argc != 3) {
+    echo "Usage: php s<student_number>.php7 <input_file> <word_to_search>\n";
+    exit(1);
+}
+
+$input_file = $argv[1];
+$word_to_search = $argv[2];
+
+$input_contents = file_get_contents($input_file);
+
+$input_cleaned = preg_replace("/[^a-zA-Z]/", "", strtolower($input_contents));
+
+echo "<!DOCTYPE html>\n";
+echo "<html>\n";
+echo "<head>\n";
+echo "<title>Converted String</title>\n";
+echo "</head>\n";
+echo "<body>\n";
+echo "<p>The converted string would be:</p>\n";
+echo "<p>$input_cleaned</p>\n";
+
+$input_reversed = strrev($input_cleaned);
+
+$word_count = countOccurrences($input_reversed, $word_to_search);
+
+echo "<p>Matches: $word_count</p>\n";
+echo "</body>\n";
+echo "</html>\n";
+
+function countOccurrences($haystack, $needle) {
+    $count = 0;
+    $pos = 0;
+    while (($pos = strpos($haystack, $needle, $pos)) !== false) {
+        $count++;
+        $pos++;
+    }
+    return $count;
+}
+?>

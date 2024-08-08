@@ -1,0 +1,32 @@
+%!PS
+/main_radius 100 def    
+/num_circles 6 def      
+/angle_step 360 num_circles div def   
+/center_x 200 def        
+/center_y 400 def        
+/circle_radius 20 def    
+/angle_increment 360 num_circles div def
+
+/draw_circle {
+    /angle exch def          
+    /x_center center_x angle cos main_radius mul add def
+    /y_center center_y angle sin main_radius mul add def
+    %poo
+    i 2 mod 0 eq {
+        0 0 0 setrgbcolor     % Black
+    } {
+        1 1 1 setrgbcolor     % White
+    } ifelse
+
+    x_center y_center circle_radius 0 360 arc fill         
+
+    0 0 0 setrgbcolor
+    x_center y_center circle_radius 0 360 arc stroke
+} def
+
+0 1 num_circles 1 sub {
+    /i exch def
+    i angle_increment mul 90 sub draw_circle
+} for
+
+showpage
